@@ -65,70 +65,54 @@ import java.util.*;
 public class Solution {
     public int countBinarySubstrings(String s) {
 
-        Map<String, Integer> substrings = new HashMap<>();
-        String subs = null;
-        //finding all the substrings
-        for (int i=0; i< s.length(); i++){
-            char start = s.charAt(i);
-            boolean flip = false;
-            for(int j=i+1; j<s.length(); j++){
-                char next = s.charAt(j);
-                if(next == start && flip == true)
-                    break;
-                if(next != start)
-                    flip = true;
-                if( (j-i+1)%2 == 0) {
-                    subs = s.substring(i, j+1);
-                    if (substrings.containsKey(subs) || validSubstring(subs)) {
-                        if (substrings.containsKey(subs)) {
-                            substrings.put(subs, substrings.get(subs) + 1);
-                        } else {
-                            substrings.put(subs, 1);
-                        }
-                    }
-                }
+        int startchar = 1;
+        int flipchar = 0;
+        int matches = 0;
+        boolean flip = false;
+        char start = s.charAt(0);
+        for(int i=1; i<s.length(); i++){
+            char current = s.charAt(i);
+
+            if(start == current && flip == false){
+                startchar++;
+                System.out.println("incrementing startchar" );
             }
+            if(start !=current ){
+                System.out.println("start not equal to current" );
+                if(flip == false)
+                    flip = true;
+                System.out.println("incrementing flipchar" );
+                flipchar++;
+                if(flipchar <= startchar){
+                    matches++;
+                    System.out.println("match found" );
+                }
+
+            }
+            if(start == current && flip == true){
+                System.out.println("resetting ewjfnewfjsd" );
+                startchar = flipchar;
+                System.out.println("startchar val = " + startchar);
+                flipchar = 1;
+                matches++;
+                start = s.charAt(i-1);
+                System.out.println("start val = " + start);
+            }
+
+
+
         }
 
-
-        int count = 0;
-        for(String str : substrings.keySet()){
-                count += substrings.get(str);
-        }
-
-        return count;
-
+        return matches;
     }
 
     public static void main(String[] args){
 
-        String s = "00110011";
+        String s = "10101";
         Solution solution = new Solution();
 
         System.out.println(solution.countBinarySubstrings(s));
     }
 
 
-    public  boolean validSubstring(String str){
-        //base case
-        //if(str.length() % 2 != 0)
-          //  return false;
-
-        int half = str.length() /2 ;
-        String str1 = str.substring(0, half);
-        String str2 = str.substring(half);
-
-        return sameAmount(str1, str2);
-
-    }
-
-    public boolean sameAmount(String str1, String str2){
-        String x = String.valueOf(str1.charAt(0));
-        String y = String.valueOf(str2.charAt(0));
-        //lenghts are not the same or 1 substring contains something from the other.
-        if(str1.length() != str2.length() || str1.contains(y) || str2.contains(x))
-            return false;
-        else
-            return true;
-    }
 }
