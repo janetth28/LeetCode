@@ -65,7 +65,7 @@ import java.util.*;
 public class Solution {
     public int countBinarySubstrings(String s) {
 
-        List<String> substrings = new ArrayList<String>();
+        Map<String, Integer> substrings = new HashMap<>();
         String subs = null;
         //finding all the substrings
         for (int i=0; i< s.length(); i++){
@@ -73,16 +73,23 @@ public class Solution {
             for(int j=i+1; j<=s.length(); j++){
 
                 subs = s.substring(i, j);
-                substrings.add(subs);
+                if(substrings.containsKey(subs)){
+                    substrings.put(subs, substrings.get(subs)+1);
+                }
+                else{
+                    substrings.put(subs, 1);
+                }
+
             }
 
         }
 
-        int count =0;
-        for(String str : substrings){
+
+        int count = 0;
+        for(String str : substrings.keySet()){
 
             if(validSubstring(str)){
-                count++;
+                count += substrings.get(str);
             }
 
         }
