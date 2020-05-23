@@ -69,10 +69,16 @@ public class Solution {
         String subs = null;
         //finding all the substrings
         for (int i=0; i< s.length(); i++){
-
-            for(int j=i+1; j<=s.length(); j++){
-                if( (j-i)%2 == 0) {
-                    subs = s.substring(i, j);
+            char start = s.charAt(i);
+            boolean flip = false;
+            for(int j=i+1; j<s.length(); j++){
+                char next = s.charAt(j);
+                if(next == start && flip == true)
+                    break;
+                if(next != start)
+                    flip = true;
+                if( (j-i+1)%2 == 0) {
+                    subs = s.substring(i, j+1);
                     if (substrings.containsKey(subs) || validSubstring(subs)) {
                         if (substrings.containsKey(subs)) {
                             substrings.put(subs, substrings.get(subs) + 1);
