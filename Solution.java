@@ -73,13 +73,13 @@ public class Solution {
             for(int j=i+1; j<=s.length(); j++){
 
                 subs = s.substring(i, j);
-                if(substrings.containsKey(subs)){
-                    substrings.put(subs, substrings.get(subs)+1);
+                if(validSubstring(subs) ) {
+                    if (substrings.containsKey(subs)) {
+                        substrings.put(subs, substrings.get(subs) + 1);
+                    } else {
+                        substrings.put(subs, 1);
+                    }
                 }
-                else{
-                    substrings.put(subs, 1);
-                }
-
             }
 
         }
@@ -87,11 +87,7 @@ public class Solution {
 
         int count = 0;
         for(String str : substrings.keySet()){
-
-            if(validSubstring(str)){
                 count += substrings.get(str);
-            }
-
         }
 
         return count;
