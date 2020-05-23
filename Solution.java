@@ -71,17 +71,17 @@ public class Solution {
         for (int i=0; i< s.length(); i++){
 
             for(int j=i+1; j<=s.length(); j++){
-
-                subs = s.substring(i, j);
-                if(validSubstring(subs) ) {
-                    if (substrings.containsKey(subs)) {
-                        substrings.put(subs, substrings.get(subs) + 1);
-                    } else {
-                        substrings.put(subs, 1);
+                if( (j-i)%2 == 0) {
+                    subs = s.substring(i, j);
+                    if (substrings.containsKey(subs) || validSubstring(subs)) {
+                        if (substrings.containsKey(subs)) {
+                            substrings.put(subs, substrings.get(subs) + 1);
+                        } else {
+                            substrings.put(subs, 1);
+                        }
                     }
                 }
             }
-
         }
 
 
@@ -105,8 +105,8 @@ public class Solution {
 
     public  boolean validSubstring(String str){
         //base case
-        if(str.length() % 2 != 0)
-            return false;
+        //if(str.length() % 2 != 0)
+          //  return false;
 
         int half = str.length() /2 ;
         String str1 = str.substring(0, half);
